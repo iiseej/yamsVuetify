@@ -11,6 +11,9 @@ const createStore = () => {
       },
       REMOVE_PLAYER: (state, player) => {
         state.players.splice()
+      },
+      RESET: (state) => {
+        state.players = []
       }
     },
     getters: {
@@ -22,6 +25,9 @@ const createStore = () => {
       },
       removePlayer ({ commit }, player) {
         commit('REMOVE_PLAYER', player)
+      },
+      reset ({ commit }) {
+        commit('RESET')
       }
     }
   })

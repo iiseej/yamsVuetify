@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import PlayerModal from './../components/PlayerModal'
   import Player from './../components/Player'
   import GameMenu from './../components/GameMenu'
@@ -44,6 +44,7 @@
       drawer: false
     }),
     methods: {
+      ...mapActions(['reset']),
       close () {
         this.dialog = false
         this.newGame = true
@@ -55,10 +56,13 @@
         this.drawer = true
       },
       openPlayerModal () {
+        this.reset()
         this.dialog = true
       },
       closeMenu () {
+        this.reset()
         this.drawer = false
+        this.newGame = false
       }
 
     },
