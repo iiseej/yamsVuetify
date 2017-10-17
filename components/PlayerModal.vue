@@ -56,7 +56,7 @@ export default {
     },
     cancel () {
       this.players.splice(0, this.players.length)
-      this.$emit('closeModal')
+      this.$emit('cancelAddPlayer')
     },
     addPlayer () {
       this.players.push({name: ''})

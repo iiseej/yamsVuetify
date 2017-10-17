@@ -1,14 +1,14 @@
 <template>
-  <!-- <v-container class="display" fluid> -->
   <v-layout row justify-center align-center>
-    <player-modal @closeModal="close" :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-      <player v-for="(player, index) in players" :name="player.name"></player>
-    <v-btn class="newGame" v-if="!newGame" color="primary" flat @click="dialog = true">New game</v-btn>
+    <game-menu @newGame="openPlayerModal" @exit="closeMenu":drawer="drawer"></game-menu>
+    <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
+    <player v-for="(player, index) in players" :name="player.name"></player>
 
-    <v-flex xs12 sm8 md6 v-if="newGame">
-      <!-- <div class="text-xs-center">
-        <img src="/v.png" alt="Vuetify.js" class="mb-5" />
-      </div> -->
+    <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
+
+
+    <!-- New game window -->
+    <v-flex xs12 sm8 md6 v-if="!drawer && !newGame">
       <v-card>
         <v-card-title class="headline">Yams</v-card-title>
         <v-card-text>
@@ -19,36 +19,46 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" flat @click="dialog = true; newGame = false">Start</v-btn>
+          <v-btn color="primary" flat @click.stop="drawer = !drawer; newGame = false">Play !</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
-<!-- </v-container> -->
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
   import PlayerModal from './../components/PlayerModal'
   import Player from './../components/Player'
+  import GameMenu from './../components/GameMenu'
 
   export default {
     components: {
       PlayerModal,
-      Player
+      Player,
+      GameMenu
     },
     data: () => ({
       dialog: false,
-      newGame: true
+      newGame: false,
+      drawer: false
     }),
     methods: {
       close () {
         this.dialog = false
-        this.newGame = false
+        this.newGame = true
+        this.drawer = false
       },
       cancelAddPlayer () {
         this.dialog = false
         this.newGame = false
+        this.drawer = true
+      },
+      openPlayerModal () {
+        this.dialog = true
+      },
+      closeMenu () {
+        this.drawer = false
       }
 
     },
