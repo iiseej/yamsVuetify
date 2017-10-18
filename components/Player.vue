@@ -1,13 +1,13 @@
 <template>
   <v-container fluid>
     <v-layout  justify-center>
-      <v-flex xs6 class="playerColumn">
+      <v-flex xs10 class="playerColumn">
         <v-card :style="{'background-color': columnColor}">
           <v-card-text class="scores px-0">
             <v-container class="haut">
             <v-layout  class="height-4vh">
             <v-flex xs12>
-            <v-subheader class="player-name">{{ name }}</v-subheader>
+            <v-subheader class="player-name display-1">{{ name }}</v-subheader>
             </v-flex>
             </v-layout>
             </v-container>
@@ -35,7 +35,7 @@
       <v-container class="haut">
   <v-layout  class="height-4vh" row v-for="(category, index) in score.difference" :style="{'background-color': category.bgcolor}">
     <v-flex xs9>
-      <v-subheader class="height-4vh" :style="{'color': category.textColor}"><i class="material-icons">{{ category.icon }}</i>{{ category.name }}</v-subheader>
+      <v-subheader class="height-4vh" :style="{'color': category.textColor}"><v-icon class="material-icons" color="black">{{ category.icon }}</v-icon>{{ category.name }}</v-subheader>
     </v-flex>
     <v-flex xs3>
       <v-text-field
@@ -225,32 +225,32 @@ export default {
         }],
       bas: [
         {
-          name: 'Brelan',
+          name: 'Brelan +20',
           value: null,
           bgcolor: this.columnColor
         },
         {
-          name: 'Full',
+          name: 'Full +30',
           value: null,
           bgcolor: this.columnColor
         },
         {
-          name: 'Carré',
+          name: 'Carré +40',
           value: null,
           bgcolor: this.columnColor
         },
         {
-          name: 'Yams',
+          name: 'Yams +50',
           value: null,
           bgcolor: this.columnColor
         },
         {
-          name: 'Bonus Yams',
+          name: 'Bonus Yams - 50 pts',
           value: null,
           bgcolor: this.columnColor
         },
         {
-          name: 'Yams sec',
+          name: 'Yams sec - 100pts',
           value: null,
           bgcolor: this.columnColor
         },
@@ -349,6 +349,7 @@ li {
   justify-content: center;
   background-color: transparent;
   min-height: 0px;
+  height: 4vh;
 }
 .grand-total-div{
   display:flex;
@@ -358,7 +359,7 @@ li {
   display:flex;
   justify-content: center;
   font-size: 20px;
-  color: #113c68;
+  color: black;
 }
 .dice-png
   max-width: 100%
