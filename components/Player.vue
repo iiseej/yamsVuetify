@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout  justify-center>
       <v-flex xs6 class="playerColumn">
-        <v-card>
+        <v-card :style="{'background-color': columnColor}">
           <v-card-text class="scores px-0">
             <v-container class="haut">
             <v-layout  class="height-4vh">
@@ -13,9 +13,9 @@
             </v-container>
 
             <v-container class="haut">
-        <v-layout class="height-4vh"  row v-for="(category, index) in score.haut">
+        <v-layout class="height-4vh"  row v-for="(category, index) in score.haut" :style="{'background-color': category.bgcolor}">
           <v-flex xs9>
-            <v-subheader>{{ category.name }}</v-subheader>
+            <v-subheader class="dices height-4vh" :style="{'color': category.textColor}" ><img class="dice-png" :src="category.icon"/> {{ category.name }}</v-subheader>
           </v-flex>
           <v-flex xs3>
             <v-text-field
@@ -26,15 +26,16 @@
               v-model="category.value"
               label=""
               single-line
+              :style="{'color': category.textColor}"
             ></v-text-field>
           </v-flex>
         </v-layout>
       </v-container>
 
       <v-container class="haut">
-  <v-layout  class="height-4vh" row v-for="(category, index) in score.difference">
+  <v-layout  class="height-4vh" row v-for="(category, index) in score.difference" :style="{'background-color': category.bgcolor}">
     <v-flex xs9>
-      <v-subheader>{{ category.name }}</v-subheader>
+      <v-subheader class="height-4vh" :style="{'color': category.textColor}"><i class="material-icons">{{ category.icon }}</i>{{ category.name }}</v-subheader>
     </v-flex>
     <v-flex xs3>
       <v-text-field
@@ -51,9 +52,9 @@
 </v-container>
 
 <v-container class="haut">
-<v-layout  class="height-4vh" row v-for="(category, index) in score.suites">
+<v-layout  class="height-4vh" row v-for="(category, index) in score.suites" :style="{'background-color': category.bgcolor}">
 <v-flex xs9>
-<v-subheader>{{ category.name }}</v-subheader>
+<v-subheader class="height-4vh" :style="{'color': category.textColor}"><img v-for="dice in category.dices" class="dice-png" :src="dice"/> {{ category.name }}</v-subheader>
 </v-flex>
 <v-flex xs3>
 <v-text-field
@@ -70,9 +71,9 @@ v-model="category.value"
 </v-container>
 
 <v-container class="haut">
-<v-layout  class="height-4vh" row v-for="(category, index) in score.bas">
+<v-layout  class="height-4vh" row v-for="(category, index) in score.bas" :style="{'background-color': category.bgcolor}">
 <v-flex xs9>
-<v-subheader>{{ category.name }}</v-subheader>
+<v-subheader class="height-4vh" :style="{'color': category.textColor}">{{ category.name }}</v-subheader>
 </v-flex>
 <v-flex xs3>
 <v-text-field
@@ -119,118 +120,145 @@ export default {
     }
   },
   data: () => ({
-    color: null,
+    color: 'hsla(0, 0%, 100%, 0)',
+    columnColor: 'hsla(0, 0%, 100%, 0)',
     total: {
       value: 0
     },
     score: {
       haut: [
         {
-          name: 'Les As',
+          icon: '1.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          textColor: 'black',
+          name: ''
         },
         {
-          name: 'Les 2',
+          icon: '2.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          name: ''
 
         },
         {
-          name: 'Les 3',
+          icon: '3.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          name: ''
 
         },
         {
-          name: 'Les 4',
+          icon: '4.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          name: ''
 
         },
         {
-          name: 'Les 5',
+          icon: '5.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          name: ''
         },
         {
-          name: 'Les 6',
+          icon: '6.png',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          name: ''
 
         },
         {
           name: 'Total Haut',
           value: 0,
-          color: '#1d4f74'
+          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+          textColor: 'black'
         }],
       difference: [
         {
-          name: 'Le petit',
+          name: '',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          icon: 'remove_circle'
         },
         {
-          name: 'Le grand',
+          name: '',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor,
+          icon: 'add_circle'
         },
         {
-          name: 'Différence',
+          name: 'Différence + 20',
           value: 0,
-          color: '#1d4f74'
+          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+          textColor: 'black'
         }],
       suites: [
         {
-          name: 'Petite suite',
+          dices: {
+            dice1: '1.png',
+            dice2: '2.png',
+            dice3: '3.png',
+            dice4: '4.png',
+            dice5: '5.png'
+          },
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
-          name: 'Grande suite',
+          dices: {
+            dice2: '2.png',
+            dice3: '3.png',
+            dice4: '4.png',
+            dice5: '5.png',
+            dice6: '6.png'
+          },
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Total suites',
+          dices: '',
           value: 0,
-          color: '#1d4f74'
+          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+          textColor: 'black'
         }],
       bas: [
         {
           name: 'Brelan',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Full',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Carré',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Yams',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Bonus Yams',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Yams sec',
           value: null,
-          color: 'transparent'
+          bgcolor: this.columnColor
         },
         {
           name: 'Total bas',
           value: 0,
-          color: '#1d4f74'
+          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+          textColor: 'black'
         }
       ]
     }
@@ -239,6 +267,7 @@ export default {
     ...mapGetters(['players']),
     setColor () {
       this.color = 'hsl(' + Math.round(this.total.value / 4.8) + ', 100%, 50%)'
+      this.columnColor = 'hsla(' + Math.round(this.total.value / 4.8) + ', 100%, 50%, 0.15)'
     }
   },
   methods: {
@@ -287,15 +316,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.card {
-  background-color: transparent;
-}
+
 .content {
   margin: 0;
 }
 .playerColumn{
   height: 100vh;
-  background-color: transparent;
 }
 .scores{
   height: 96vh;
@@ -319,8 +345,8 @@ li {
   padding: 0 0 1vh 0;
 }
 .input-score{
-  text-align: center;
-  color: red;
+  display: flex;
+  justify-content: center;
   background-color: transparent;
   min-height: 0px;
 }
@@ -334,65 +360,7 @@ li {
   font-size: 20px;
   color: #113c68;
 }
-
-.label
-  font-weight: bold
-  font-size: 20px
-.player
-  display: flex
-  flex-direction: column
-  margin-right: 50px
-  margin-left: 50px
-  width: 150px
-  height: 100%
-
-.chip
-  width: 120px
-  height: 50px
-  font-size: 12px
-  font-weight: regular
-.token
-  text-align: center
-  margin-bottom: 2px
-  font-weight: bold
-  font-size: 20px
-  margin-top: 2px
-  border-radius: 5px
-
-.row
-  background-color: rgba(#feeed5, 0.54)
-  color: black
-  display: flex
-  align-items: center
-  justify-content: space-between
-  padding: 0 5px 0 5px
-
-.name
-  text-align: center
-  background-color: rgba(#feeed5, 0.54)
-
-.Total
-  font-weight: bold
-
-.labelTotal
-  font-weight: bold
-  color: white
-  background-color: #1d4f74
-  border-radius: 5px
-  font-size: 20px
-
-
-.label0, .label1, .label2, .label3, .label4, .label5, .label7, .label8, .label10, .label11, .label13, .label14, .label15, .label16, .label17, .label18
-  color: #1d4f74
-  font-size: 20px
-  border-radius: 5px
-
-input:focus
-  border: none;
-  color: transparent;
-  display: inline-block;
-  font-size: 2em;
-  text-shadow: 0 0 0 #1d4f74;
-  width: 2em;
-
+.dice-png
+  max-width: 100%
+  max-height: 100%
 </style>

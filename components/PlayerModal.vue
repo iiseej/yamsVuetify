@@ -29,7 +29,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="closeModal">Ok</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="closeModal">Start</v-btn>
           <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -50,13 +50,13 @@ export default {
   data: () => ({
   }),
   methods: {
-    ...mapActions(['addPlayer', 'removePlayer']),
+    ...mapActions(['addPlayer', 'removePlayer', 'reset']),
     closeModal () {
       this.$emit('closeModal')
     },
     cancel () {
-      this.players.splice(0, this.players.length)
-      this.$emit('cancelAddPlayer')
+      this.reset()
+      this.$emit('cancel')
     },
     addPlayer () {
       this.players.push({name: ''})
