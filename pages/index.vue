@@ -1,8 +1,8 @@
 <template>
   <v-layout row justify-center align-center>
-    <game-menu @newGame="openPlayerModal" @exit="closeMenu":drawer="drawer"></game-menu>
+    <game-menu @newGame="openPlayerModal" @exit="closeMenu" @loadLostGame="addPlayer":drawer="drawer"></game-menu>
     <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-    <player v-for="(player, index) in players" :index="index"></player>
+    <player v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded"></player>
 
     <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
 
@@ -31,6 +31,7 @@
   import PlayerModal from './../components/PlayerModal'
   import Player from './../components/Player'
   import GameMenu from './../components/GameMenu'
+  // import _ from 'lodash'
 
   export default {
     components: {
@@ -41,10 +42,11 @@
     data: () => ({
       dialog: false,
       newGame: false,
-      drawer: false
+      drawer: false,
+      gameLoaded: false
     }),
     methods: {
-      ...mapActions(['reset']),
+      ...mapActions(['reset', 'addPlayer']),
       close () {
         this.dialog = false
         this.newGame = true
@@ -63,8 +65,15 @@
         this.reset()
         this.drawer = false
         this.newGame = false
+      },
+      addPlayer () {
+        for (let i = 0; i < localStorage.length; i += 1) {
+          this.players.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
+        }
+        this.drawer = false
+        this.newGame = true
+        this.gameLoaded = true
       }
-
     },
     computed: {
       ...mapGetters(['players'])

@@ -49,6 +49,7 @@ export default {
   data: () => ({
     items: [
       { title: 'Nouvelle partie', icon: 'dashboard', function: 'newGame' },
+      { title: 'Charger partie en cours', icon: 'dashboard', function: 'loadLostGame' },
       { title: 'Partie suivante', icon: 'question_answer', function: 'nextGame' },
       { title: 'Statistiques', icon: 'question_answer', function: 'stats' },
       { title: 'Quitter', icon: 'question_answer', function: 'exit' }
@@ -59,13 +60,16 @@ export default {
       this.$emit('newGame')
     },
     nextGame () {
-
+      this.$emit('saveGame')
     },
     stats () {
 
     },
     exit () {
       this.$emit('exit')
+    },
+    loadLostGame () {
+      this.$emit('loadLostGame')
     }
   },
   computed: {

@@ -62,36 +62,71 @@ export default {
       this.players.push(
         {
           name: '',
-          scores: {
-            haut: {
-              ace: null,
-              two: null,
-              three: null,
-              four: null,
-              five: null,
-              six: null,
-              totalHaut: 0
+          score: {
+            ace: {
+              ref: 'ace',
+              value: ''
             },
-            difference: {
-              moins: null,
-              plus: null,
-              totalDiff: 0
+            two: {
+              ref: 'two',
+              value: ''
             },
-            suites: {
-              petiteSuite: null,
-              grandeSuite: null,
-              totalSuite: 0
+            three: {
+              ref: 'three',
+              value: ''
             },
-            bas: {
-              brelan: null,
-              full: null,
-              carre: null,
-              yams: null,
-              bonusYams: null,
-              yamsSec: null,
-              totalBas: 0
+            four: {
+              ref: 'four',
+              value: ''
             },
-            total: 0
+            five: {
+              ref: 'five',
+              value: ''
+            },
+            six: {
+              ref: 'six',
+              value: ''
+            },
+            moins: {
+              ref: 'moins',
+              value: ''
+            },
+            plus: {
+              ref: 'plus',
+              value: ''
+            },
+            petiteSuite: {
+              ref: 'petiteSuite',
+              value: ''
+            },
+            grandeSuite: {
+              ref: 'grandeSuite',
+              value: ''
+            },
+            brelan: {
+              ref: 'brelan',
+              value: ''
+            },
+            full: {
+              ref: 'full',
+              value: ''
+            },
+            carre: {
+              ref: 'carre',
+              value: ''
+            },
+            yams: {
+              ref: 'yams',
+              value: ''
+            },
+            bonusYams: {
+              ref: 'bonusYams',
+              value: ''
+            },
+            yamsSec: {
+              ref: 'yamsSec',
+              value: ''
+            }
           }
         }
       )
