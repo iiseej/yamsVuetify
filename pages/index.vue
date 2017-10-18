@@ -2,7 +2,7 @@
   <v-layout row justify-center align-center>
     <game-menu @newGame="openPlayerModal" @exit="closeMenu":drawer="drawer"></game-menu>
     <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-    <player v-for="(player, index) in players" :name="player.name"></player>
+    <player v-for="(player, index) in players" :index="index"></player>
 
     <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
 

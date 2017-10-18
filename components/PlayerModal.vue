@@ -3,7 +3,7 @@
       <!-- <v-btn color="primary" dark slot="activator">Open Dialog</v-btn> -->
       <v-card>
         <v-card-title>
-          <span class="headline">Ajouter des joueurs <v-btn fab dark color="indigo" small @click="addPlayer">
+          <span class="headline">Ajouter des joueurs <v-btn fab dark color="black" small @click="addPlayer">
       <v-icon dark>add</v-icon>
     </v-btn></span>
         </v-card-title>
@@ -59,7 +59,42 @@ export default {
       this.$emit('cancel')
     },
     addPlayer () {
-      this.players.push({name: ''})
+      this.players.push(
+        {
+          name: '',
+          scores: {
+            haut: {
+              ace: null,
+              two: null,
+              three: null,
+              four: null,
+              five: null,
+              six: null,
+              totalHaut: 0
+            },
+            difference: {
+              moins: null,
+              plus: null,
+              totalDiff: 0
+            },
+            suites: {
+              petiteSuite: null,
+              grandeSuite: null,
+              totalSuite: 0
+            },
+            bas: {
+              brelan: null,
+              full: null,
+              carre: null,
+              yams: null,
+              bonusYams: null,
+              yamsSec: null,
+              totalBas: 0
+            },
+            total: 0
+          }
+        }
+      )
     },
     removePlayer (idx) {
       this.players.splice(idx, 1)

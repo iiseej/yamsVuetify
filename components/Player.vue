@@ -7,7 +7,8 @@
             <v-container class="haut">
             <v-layout  class="height-4vh">
             <v-flex xs12>
-            <v-subheader class="player-name display-1">{{ name }}</v-subheader>
+
+            <v-subheader class="player-name display-1">{{ players[index].name }}</v-subheader>
             </v-flex>
             </v-layout>
             </v-container>
@@ -31,6 +32,14 @@
           </v-flex>
         </v-layout>
       </v-container>
+      <v-container class="haut">
+      <v-layout  class="height-4vh" :style="{'background-color': score.totalHaut.bgcolor}">
+      <v-flex class="grand-total-div"xs12>
+      <v-subheader class="grand-total-text title">{{ score.totalHaut.value }}</v-subheader>
+      </v-flex>
+      </v-layout>
+      </v-container>
+
 
       <v-container class="haut">
   <v-layout  class="height-4vh" row v-for="(category, index) in score.difference" :style="{'background-color': category.bgcolor}">
@@ -50,6 +59,13 @@
     </v-flex>
   </v-layout>
 </v-container>
+<v-container class="haut">
+<v-layout  class="height-4vh" :style="{'background-color': score.totalDiff.bgcolor}">
+<v-flex class="grand-total-div" xs12>
+<v-subheader class="grand-total-text title">{{ score.totalDiff.value }}</v-subheader>
+</v-flex>
+</v-layout>
+</v-container>
 
 <v-container class="haut">
 <v-layout  class="height-4vh" row v-for="(category, index) in score.suites" :style="{'background-color': category.bgcolor}">
@@ -58,6 +74,7 @@
 </v-flex>
 <v-flex xs3>
 <v-text-field
+@dblclick.native="inputSuiteScore(category.ref), setColor()"
 class="input-score"
 @keyup.native="totalSuite(), grandTotal(), setColor()"
 v-model="category.value"
@@ -69,6 +86,13 @@ v-model="category.value"
 </v-flex>
 </v-layout>
 </v-container>
+<v-container class="haut">
+<v-layout  class="height-4vh" :style="{'background-color': score.totalSuite.bgcolor}">
+<v-flex class="grand-total-div"xs12>
+<v-subheader class="grand-total-text title">{{ score.totalSuite.value }}</v-subheader>
+</v-flex>
+</v-layout>
+</v-container>
 
 <v-container class="haut">
 <v-layout  class="height-4vh" row v-for="(category, index) in score.bas" :style="{'background-color': category.bgcolor}">
@@ -77,14 +101,22 @@ v-model="category.value"
 </v-flex>
 <v-flex xs3>
 <v-text-field
+@dblclick.native="inputBasScore(category.ref), setColor()"
 class="input-score"
-  @keyup.native="totalBAs(), grandTotal(), setColor()"
+  @keyup.native="totalBas(), grandTotal(), setColor()"
 v-model="category.value"
   name="input-1-3"
   label=""
   single-line
   solo
 ></v-text-field>
+</v-flex>
+</v-layout>
+</v-container>
+<v-container class="haut">
+<v-layout  class="height-4vh" :style="{'background-color': score.totalBas.bgcolor}">
+<v-flex class="grand-total-div" xs12>
+<v-subheader class="grand-total-text title">{{ score.totalBas.value }}</v-subheader>
 </v-flex>
 </v-layout>
 </v-container>
@@ -109,15 +141,16 @@ v-model="category.value"
 
 <script>
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'player',
   props: {
-    index: Number,
-    name: {
-      type: String,
-      required: true
-    }
+    index: Number
+    // name: {
+    //   type: String,
+    //   required: true
+    // }
   },
   data: () => ({
     color: 'hsla(0, 0%, 100%, 0)',
@@ -126,75 +159,98 @@ export default {
       value: 0
     },
     score: {
-      haut: [
-        {
+      totalHaut: {
+        ref: 'totalHaut',
+        name: 'Total Haut',
+        value: 0,
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+        textColor: 'black'
+      },
+      totalDiff: {
+        ref: 'totalDiff',
+        name: 'Différence + 20',
+        value: 0,
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+        textColor: 'black'
+      },
+      totalSuite: {
+        ref: 'totalSuite',
+        name: 'Total suites',
+        dices: '',
+        value: 0,
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+        textColor: 'black'
+      },
+      totalBas: {
+        ref: 'totalBas',
+        name: 'Total bas',
+        value: 0,
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+        textColor: 'black'
+      },
+      haut: {
+        ace: {
           icon: '1.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           textColor: 'black',
           name: ''
         },
-        {
+        two: {
+          ref: 'two',
           icon: '2.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           name: ''
-
         },
-        {
+        three: {
+          ref: 'three',
           icon: '3.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           name: ''
-
         },
-        {
+        four: {
+          ref: 'four',
           icon: '4.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           name: ''
-
         },
-        {
+        five: {
+          ref: 'five',
           icon: '5.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           name: ''
         },
-        {
+        six: {
+          ref: 'six',
           icon: '6.png',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           name: ''
-
-        },
-        {
-          name: 'Total Haut',
-          value: 0,
-          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-          textColor: 'black'
-        }],
-      difference: [
-        {
+        }
+      },
+      difference: {
+        moins: {
+          ref: 'moins',
           name: '',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           icon: 'remove_circle'
         },
-        {
+        plus: {
+          ref: 'plus',
           name: '',
-          value: null,
+          value: '',
           bgcolor: this.columnColor,
           icon: 'add_circle'
-        },
-        {
-          name: 'Différence + 20',
-          value: 0,
-          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-          textColor: 'black'
-        }],
-      suites: [
-        {
+        }
+      },
+      suites: {
+        petiteSuite: {
+          ref: 'petiteSuite',
           dices: {
             dice1: '1.png',
             dice2: '2.png',
@@ -202,10 +258,11 @@ export default {
             dice4: '4.png',
             dice5: '5.png'
           },
-          value: null,
+          value: '',
           bgcolor: this.columnColor
         },
-        {
+        grandeSuite: {
+          ref: 'grandeSuite',
           dices: {
             dice2: '2.png',
             dice3: '3.png',
@@ -213,103 +270,118 @@ export default {
             dice5: '5.png',
             dice6: '6.png'
           },
-          value: null,
+          value: '',
           bgcolor: this.columnColor
-        },
-        {
-          name: 'Total suites',
-          dices: '',
-          value: 0,
-          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-          textColor: 'black'
-        }],
-      bas: [
-        {
-          name: 'Brelan +20',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Full +30',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Carré +40',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Yams +50',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Bonus Yams - 50 pts',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Yams sec - 100pts',
-          value: null,
-          bgcolor: this.columnColor
-        },
-        {
-          name: 'Total bas',
-          value: 0,
-          bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-          textColor: 'black'
         }
-      ]
+      },
+      bas: {
+        brelan: {
+          ref: 'brelan',
+          name: 'Brelan +20',
+          value: '',
+          bgcolor: this.columnColor
+        },
+        full: {
+          ref: 'full',
+          name: 'Full +30',
+          value: '',
+          bgcolor: this.columnColor
+        },
+        carre: {
+          ref: 'carre',
+          name: 'Carré +40',
+          value: '',
+          bgcolor: this.columnColor
+        },
+        yams: {
+          ref: 'yams',
+          name: 'Yams +50',
+          value: '',
+          bgcolor: this.columnColor
+        },
+        bonusYams: {
+          ref: 'bonusYams',
+          name: 'Bonus Yams - 50 pts',
+          value: '',
+          bgcolor: this.columnColor
+        },
+        yamsSec: {
+          ref: 'yamsSec',
+          name: 'Yams sec - 100pts',
+          value: '',
+          bgcolor: this.columnColor
+        }
+      }
     }
   }),
   computed: {
-    ...mapGetters(['players']),
+    ...mapGetters(['players'])
+  },
+  methods: {
     setColor () {
       this.color = 'hsl(' + Math.round(this.total.value / 4.8) + ', 100%, 50%)'
       this.columnColor = 'hsla(' + Math.round(this.total.value / 4.8) + ', 100%, 50%, 0.15)'
-    }
-  },
-  methods: {
+    },
     totalHaut () {
-      this.score.haut[6].value = 0
-      for (let i = 0; i < 6; i += 1) {
-        this.score.haut[6].value += Number(this.score.haut[i].value)
-      }
-      if (this.score.haut[6].value >= 63) {
-        this.score.haut[6].value += 50
-        this.score.haut[6].color = '#1d742e'
-      }
+      this.score.totalHaut.value = 0
+      _.forEach(this.score.haut, (cat) => {
+        console.log(cat)
+        this.score.totalHaut.value += Number(cat.value)
+      })
     },
     diff () {
-      if (Number(this.score.difference[0].value) === 0 || Number(this.score.difference[1].value) === 0) {
-        this.score.difference[2].value = 0
-      } else if (Number(this.score.difference[1].value) < Number(this.score.difference[0].value)) {
-        this.score.difference[2].value = 0
+      if ((Number(this.score.difference.moins.value) === 0 || Number(this.score.difference.plus.value) === 0)) {
+        this.score.totalDiff.value = 0
+      } else if (Number(this.score.difference.plus.value) < Number(this.score.difference.moins.value)) {
+        this.score.totalDiff.value = 0
       } else {
-        this.score.difference[2].value = Number(this.score.difference[1].value) - Number(this.score.difference[0].value) + 20
+        this.score.totalDiff.value = Number(this.score.difference.plus.value) - Number(this.score.difference.moins.value) + 20
       }
     },
     totalSuite () {
-      if (Number(this.score.suites[0].value) === 30 && Number(this.score.suites[1].value) === 40) {
-        this.score.suites[2].value = Number(this.score.suites[0].value) + Number(this.score.suites[1].value) + 30
+      if (Number(this.score.suites.petiteSuite.value) === 30 && Number(this.score.suites.grandeSuite.value) === 40) {
+        this.score.totalSuite.value = Number(this.score.suites.petiteSuite.value) + Number(this.score.suites.grandeSuite.value) + 30
       } else {
-        this.score.suites[2].value = Number(this.score.suites[0].value) + Number(this.score.suites[1].value)
+        this.score.totalSuite.value = Number(this.score.suites.petiteSuite.value) + Number(this.score.suites.grandeSuite.value)
       }
     },
-    totalBAs () {
-      this.score.bas[6].value = 0
-      for (let i = 0; i < 6; i += 1) {
-        this.score.bas[6].value += Number(this.score.bas[i].value)
+    inputSuiteScore (ref) {
+      ref === 'petiteSuite' ? this.score.suites.petiteSuite.value = 30 : this.score.suites.grandeSuite.value = 40
+      this.totalSuite()
+    },
+    totalBas () {
+      this.score.totalBas.value = 0
+      _.forEach(this.score.bas, (cat) => {
+        this.score.totalBas.value += Number(cat.value)
+      })
+    },
+    inputBasScore (ref) {
+      if (ref === 'bonusYams') {
+        this.score.bas.bonusYams.value = Number(this.score.bas.bonusYams.value) + 50
+      } else if (ref === 'yamsSec') {
+        this.score.bas.yamsSec.value = Number(this.score.bas.yamsSec.value) + 100
       }
+      this.totalBas()
     },
     grandTotal () {
-      this.total.value = this.score.haut[6].value + this.score.difference[2].value + this.score.suites[2].value + this.score.bas[6].value
-    }
+      this.total.value = this.score.totalHaut.value + this.score.totalDiff.value + this.score.totalSuite.value + this.score.totalBas.value
+      // this.setScore()
+    },
     // endOfGame () {
     //   if (!this.haut.some(elem => elem.value === null) && !this.bas.some(elem => elem.value === null)) {
     //     alert('partie finie')
     //   }
+    // }
+    setScore () {
+    }
+    // for (let i = 0; i < this.players[this.index].scores.haut.length; i += 1) {
+    //   this.players[this.index].scores.haut[i].value = Number(this.score.haut[i].value)
+    // }
+    // for (let i = 0; i < this.players[this.index].scores.haut.length; i += 1) {
+    //   this.players[this.index].scores.haut[i].value = Number(this.score.haut[i].value)
+    // }
+    // for (let i = 0; i < this.players[this.index].scores.haut.length; i += 1) {
+    //   this.players[this.index].scores.haut[i].value = Number(this.score.haut[i].value)
     // }
   }
 }
@@ -354,6 +426,7 @@ li {
 .grand-total-div{
   display:flex;
   justify-content: center;
+  align-items: center;
 }
 .player-name{
   display:flex;
