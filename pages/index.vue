@@ -73,6 +73,7 @@
         }
         this.drawer = false
         this.newGame = true
+        this.gameLoaded = true
       }
     },
     computed: {

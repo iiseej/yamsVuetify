@@ -393,7 +393,9 @@ export default {
       })
     },
     saveGame () {
-      // console.log(_.keys(this.score))
+      for (let i = 0; i < localStorage.length; i += 1) {
+        localStorage.removeItem(localStorage.key(i))
+      }
       _.forEach(this.score.tables, (sc) => {
         _.forEach(sc, (cat) => {
           console.log(cat.value)
