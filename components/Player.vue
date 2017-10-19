@@ -339,6 +339,7 @@ export default {
       _.forEach(this.score.tables.haut, (cat) => {
         this.score.totalHaut.value += Number(cat.value)
       })
+      this.score.totalHaut.value >= 63 ? this.score.totalHaut.value += 50 : this.score.totalHaut.value += 0
     },
     diff () {
       if ((Number(this.score.tables.difference.moins.value) === 0 || Number(this.score.tables.difference.plus.value) === 0)) {

@@ -60,7 +60,7 @@ export default {
       this.$emit('newGame')
     },
     nextGame () {
-      this.$emit('saveGame')
+      this.$emit('nextGame')
     },
     stats () {
 

@@ -2,7 +2,7 @@
   <v-layout row justify-center align-center>
     <game-menu @newGame="openPlayerModal" @exit="closeMenu" @loadLostGame="addPlayer":drawer="drawer"></game-menu>
     <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-    <player v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded"></player>
+    <player v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded" :nextGame="nextGame"></player>
 
     <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
 
@@ -43,7 +43,8 @@
       dialog: false,
       newGame: false,
       drawer: false,
-      gameLoaded: false
+      gameLoaded: false,
+      nextGame: false
     }),
     methods: {
       ...mapActions(['reset', 'addPlayer']),
@@ -72,7 +73,6 @@
         }
         this.drawer = false
         this.newGame = true
-        this.gameLoaded = true
       }
     },
     computed: {
