@@ -77,7 +77,7 @@
 <v-flex xs3>
 <v-text-field
 @change.native="saveGame"
-@dblclick.native="inputSuiteScore(category.ref), setColor()"
+@dblclick.native="inputSuiteScore(category.ref), setColor(), grandTotal()"
 class="input-score"
 @keyup.native="totalSuite(), grandTotal(), setColor()"
 v-model="category.value"
@@ -154,7 +154,15 @@ export default {
     gameLoaded: {
       type: Boolean,
       default: false
+    },
+    nextGameLoaded: {
+      type: Boolean,
+      default: false
+    },
+    playersPlaying: {
+      type: Array
     }
+
     // name: {
     //   type: String,
     //   required: true
@@ -383,19 +391,8 @@ export default {
     //     alert('partie finie')
     //   }
     // }
-    setScore () {
-      // console.log(_.keys(this.score))
-      _.forEach(this.score, (sc) => {
-        // console.log(sc)
-        _.forEach(sc, (cat) => {
-          // this.players[this.index].score.sc.value = cat.value
-        })
-      })
-    },
     saveGame () {
-      for (let i = 0; i < localStorage.length; i += 1) {
-        localStorage.removeItem(localStorage.key(i))
-      }
+      localStorage.clear()
       _.forEach(this.score.tables, (sc) => {
         _.forEach(sc, (cat) => {
           console.log(cat.value)
@@ -406,8 +403,8 @@ export default {
         localStorage.setItem(player.name, JSON.stringify(player))
       })
     },
-    retrieveScore () {
-      if (this.gameLoaded === true) {
+    setScore () {
+      if (this.gameLoaded === true || this.nextGameLoaded === true) {
         _.forEach(this.score.tables, (sc) => {
           _.forEach(sc, (cat) => {
             cat.value = this.players[this.index].score[cat.ref].value
@@ -417,7 +414,15 @@ export default {
     }
   },
   created () {
-    this.retrieveScore()
+    if (this.gameLoaded === true) {
+      this.setScore()
+    } else {
+      _.forEach(this.score.tables, (sc) => {
+        _.forEach(sc, (cat) => {
+          cat.value = ''
+        })
+      })
+    }
   }
 }
 </script>

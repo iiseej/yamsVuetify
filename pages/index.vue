@@ -1,8 +1,8 @@
 <template>
   <v-layout row justify-center align-center>
-    <game-menu @newGame="openPlayerModal" @exit="closeMenu" @loadLostGame="addPlayer":drawer="drawer"></game-menu>
+    <game-menu @newGame="openPlayerModal" @exit="closeMenu" @loadLostGame="retrievePlayers" @nextGame="resetScore" :drawer="drawer"></game-menu>
     <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-    <player v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded" :nextGame="nextGame"></player>
+    <player :playersPlaying="playersPlaying" v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded" :nextGameLoaded="nextGameLoaded"></player>
 
     <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
 
@@ -31,6 +31,7 @@
   import PlayerModal from './../components/PlayerModal'
   import Player from './../components/Player'
   import GameMenu from './../components/GameMenu'
+  import _ from 'lodash'
   // import _ from 'lodash'
 
   export default {
@@ -44,7 +45,8 @@
       newGame: false,
       drawer: false,
       gameLoaded: false,
-      nextGame: false
+      nextGameLoaded: false,
+      playersPlaying: []
     }),
     methods: {
       ...mapActions(['reset', 'addPlayer']),
@@ -61,19 +63,33 @@
       openPlayerModal () {
         this.reset()
         this.dialog = true
+        this.gameLoaded = false
+        this.playersPlaying = []
+        localStorage.clear()
       },
       closeMenu () {
         this.reset()
         this.drawer = false
         this.newGame = false
       },
-      addPlayer () {
+      retrievePlayers () {
+        this.reset()
         for (let i = 0; i < localStorage.length; i += 1) {
           this.players.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
         }
         this.drawer = false
         this.newGame = true
         this.gameLoaded = true
+      },
+      resetScore () {
+        _.forEach(this.players, (player) => {
+          this.playersPlaying.push(player.name)
+        })
+        this.reset()
+        _.forEach(this.playersPlaying, (player) => {
+          this.addPlayer(this.playerModel)
+        })
+        this.nextGameLoaded = true
       }
     },
     computed: {
