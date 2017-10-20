@@ -5,133 +5,132 @@
         <v-card :style="{'background-color': columnColor}">
           <v-card-text class="scores px-0">
             <v-container class="haut">
-            <v-layout  class="height-4vh">
-            <v-flex xs12>
+              <v-layout  class="height-4vh">
+                <v-flex xs12>
 
-            <v-subheader class="player-name display-1">{{ players[index].name }}</v-subheader>
-            </v-flex>
-            </v-layout>
+                  <v-subheader class="player-name display-1">{{ players[index].name }}</v-subheader>
+                </v-flex>
+              </v-layout>
             </v-container>
 
             <v-container class="haut">
-        <v-layout class="height-4vh"  row v-for="(category, index) in score.tables.haut" :style="{'background-color': category.bgcolor}">
-          <v-flex xs9>
-            <v-subheader class="dices height-4vh" :style="{'color': category.textColor}" ><img class="dice-png" :src="category.icon"/> {{ category.name }}</v-subheader>
-          </v-flex>
-          <v-flex xs3>
-            <v-text-field
-            @change.native="savePlayer"
-            class="input-score"
-             solo
-              @keyup.native="totalHaut(), grandTotal(), setColor()"
-              name="input-1-3"
-              v-model="category.value"
-              label=""
-              single-line
-              :style="{'color': category.textColor}"
-            ></v-text-field>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-container class="haut">
-      <v-layout  class="height-4vh" :style="{'background-color': score.totalHaut.bgcolor}">
-      <v-flex class="grand-total-div"xs12>
-      <v-subheader class="grand-total-text title">{{ score.totalHaut.value }}</v-subheader>
-      </v-flex>
-      </v-layout>
-      </v-container>
+              <v-layout class="height-4vh"  row v-for="(category, index) in score.tables.haut">
+                <v-flex xs9>
+                  <v-subheader class="dices height-4vh" ><img class="dice-png" :src="category.icon"/> {{ category.name }}</v-subheader>
+                </v-flex>
+                <v-flex class="input-block" xs3>
+                  <v-text-field
+                  @change.native="savePlayer"
+                  class="input-score"
+                  solo
+                  @keyup.native="totalHaut(), grandTotal(), setColor()"
+                  name="input-1-3"
+                  v-model="category.value"
+                  label=""
+                  single-line
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" :style="{'background-color': score.totalHaut.bgcolor}">
+                <v-flex class="grand-total-div"xs12>
+                  <v-subheader class="grand-total-text title">{{ score.totalHaut.value }}</v-subheader>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
 
-      <v-container class="haut">
-  <v-layout  class="height-4vh" row v-for="(category, index) in score.tables.difference" :style="{'background-color': category.bgcolor}">
-    <v-flex xs9>
-      <v-subheader class="height-4vh" :style="{'color': category.textColor}"><v-icon class="material-icons" color="black">{{ category.icon }}</v-icon>{{ category.name }}</v-subheader>
-    </v-flex>
-    <v-flex xs3>
-      <v-text-field
-      @change.native="saveGame"
-      class="input-score"
-      @keyup.native="diff(), grandTotal(), setColor()"
-        v-model="category.value"
-        name="input-1-3"
-        label=""
-        single-line
-        solo
-      ></v-text-field>
-    </v-flex>
-  </v-layout>
-</v-container>
-<v-container class="haut">
-<v-layout  class="height-4vh" :style="{'background-color': score.totalDiff.bgcolor}">
-<v-flex class="grand-total-div" xs12>
-<v-subheader class="grand-total-text title">{{ score.totalDiff.value }}</v-subheader>
-</v-flex>
-</v-layout>
-</v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" row v-for="(category, index) in score.tables.difference">
+                <v-flex xs9>
+                  <v-subheader class="height-4vh"><v-icon class="material-icons" color="black">{{ category.icon }}</v-icon>{{ category.name }}</v-subheader>
+                </v-flex>
+                <v-flex class="input-block" xs3>
+                  <v-text-field
+                  @change.native="savePlayer"
+                  class="input-score"
+                  @keyup.native="diff(), grandTotal(), setColor()"
+                  v-model="category.value"
+                  name="input-1-3"
+                  label=""
+                  single-line
+                  solo
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" :style="{'background-color': score.totalDiff.bgcolor}">
+                <v-flex class="grand-total-div" xs12>
+                  <v-subheader class="grand-total-text title">{{ score.totalDiff.value }}</v-subheader>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
-<v-container class="haut">
-<v-layout  class="height-4vh" row v-for="(category, index) in score.tables.suites" :style="{'background-color': category.bgcolor}">
-<v-flex xs9>
-<v-subheader class="height-4vh" :style="{'color': category.textColor}"><img v-for="dice in category.dices" class="dice-png" :src="dice"/> {{ category.name }}</v-subheader>
-</v-flex>
-<v-flex xs3>
-<v-text-field
-@change.native="saveGame"
-@dblclick.native="inputSuiteScore(category.ref), setColor(), grandTotal()"
-class="input-score"
-@keyup.native="totalSuite(), grandTotal(), setColor()"
-v-model="category.value"
-  name="input-1-3"
-  label=""
-  single-line
-  solo
-></v-text-field>
-</v-flex>
-</v-layout>
-</v-container>
-<v-container class="haut">
-<v-layout  class="height-4vh" :style="{'background-color': score.totalSuite.bgcolor}">
-<v-flex class="grand-total-div"xs12>
-<v-subheader class="grand-total-text title">{{ score.totalSuite.value }}</v-subheader>
-</v-flex>
-</v-layout>
-</v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" row v-for="(category, index) in score.tables.suites">
+                <v-flex xs9>
+                  <v-subheader class="height-4vh"><img v-for="dice in category.dices" class="dice-png" :src="dice"/> {{ category.name }}</v-subheader>
+                </v-flex>
+                <v-flex class="input-block" xs3>
+                  <v-text-field
+                  @change.native="savePlayer"
+                  @dblclick.native="inputSuiteScore(category.ref), setColor(), grandTotal()"
+                  class="input-score"
+                  @keyup.native="totalSuite(), grandTotal(), setColor()"
+                  v-model="category.value"
+                  name="input-1-3"
+                  label=""
+                  single-line
+                  solo
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" :style="{'background-color': score.totalSuite.bgcolor}">
+                <v-flex class="grand-total-div"xs12>
+                  <v-subheader class="grand-total-text title">{{ score.totalSuite.value }}</v-subheader>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
-<v-container class="haut">
-<v-layout  class="height-4vh" row v-for="(category, index) in score.tables.bas" :style="{'background-color': category.bgcolor}">
-<v-flex xs9>
-<v-subheader class="height-4vh" :style="{'color': category.textColor}">{{ category.name }}</v-subheader>
-</v-flex>
-<v-flex xs3>
-<v-text-field
-@change.native="saveGame"
-@dblclick.native="inputBasScore(category.ref), grandTotal(), setColor()"
-class="input-score"
-  @keyup.native="totalBas(), grandTotal(), setColor()"
-v-model="category.value"
-  name="input-1-3"
-  label=""
-  single-line
-  solo
-></v-text-field>
-</v-flex>
-</v-layout>
-</v-container>
-<v-container class="haut">
-<v-layout  class="height-4vh" :style="{'background-color': score.totalBas.bgcolor}">
-<v-flex class="grand-total-div" xs12>
-<v-subheader class="grand-total-text title">{{ score.totalBas.value }}</v-subheader>
-</v-flex>
-</v-layout>
-</v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" row v-for="(category, index) in score.tables.bas">
+                <v-flex xs9>
+                  <v-subheader class="height-4vh">{{ category.name }}</v-subheader>
+                </v-flex>
+                <v-flex class="input-block" xs3>
+                  <v-text-field
+                  @change.native="savePlayer"
+                  @dblclick.native="inputBasScore(category.ref), grandTotal(), setColor()"
+                  class="input-score"
+                  @keyup.native="totalBas(), grandTotal(), setColor()"
+                  v-model="category.value"
+                  name="input-1-3"
+                  label=""
+                  single-line
+                  solo
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <v-container class="haut">
+              <v-layout  class="height-4vh" :style="{'background-color': score.totalBas.bgcolor}">
+                <v-flex class="grand-total-div" xs12>
+                  <v-subheader class="grand-total-text title">{{ score.totalBas.value }}</v-subheader>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
-<v-container class="haut">
-<v-layout  class="total height-4vh" :style="{'background-color': color}">
-<v-flex class="grand-total-div"xs12>
-<v-subheader class="grand-total-text display-1">{{ score.total.value }}</v-subheader>
-</v-flex>
-</v-layout>
-</v-container>
+            <v-container class="haut">
+              <v-layout  class="total height-4vh" :style="{'background-color': color}">
+                <v-flex class="grand-total-div"xs12>
+                  <v-subheader class="grand-total-text display-1">{{ score.total.value }}</v-subheader>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
 
 
@@ -171,6 +170,7 @@ export default {
   data: () => ({
     color: 'hsla(0, 0%, 100%, 0)',
     columnColor: 'hsla(0, 0%, 100%, 0)',
+    bgcolor: this.columnColor,
     score: {
       total: {
         ref: 'total',
@@ -180,30 +180,26 @@ export default {
         ref: 'totalHaut',
         name: 'Total Haut',
         value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-        textColor: 'black'
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
       },
       totalDiff: {
         ref: 'totalDiff',
         name: 'Différence + 20',
         value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-        textColor: 'black'
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
       },
       totalSuite: {
         ref: 'totalSuite',
         name: 'Total suites',
         dices: '',
         value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-        textColor: 'black'
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
       },
       totalBas: {
         ref: 'totalBas',
         name: 'Total bas',
         value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-        textColor: 'black'
+        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
       },
       tables: {
         haut: {
@@ -211,43 +207,36 @@ export default {
             ref: 'ace',
             icon: '1.png',
             value: '',
-            bgcolor: this.columnColor,
-            textColor: 'black',
             name: ''
           },
           two: {
             ref: 'two',
             icon: '2.png',
             value: '',
-            bgcolor: this.columnColor,
             name: ''
           },
           three: {
             ref: 'three',
             icon: '3.png',
             value: '',
-            bgcolor: this.columnColor,
             name: ''
           },
           four: {
             ref: 'four',
             icon: '4.png',
             value: '',
-            bgcolor: this.columnColor,
             name: ''
           },
           five: {
             ref: 'five',
             icon: '5.png',
             value: '',
-            bgcolor: this.columnColor,
             name: ''
           },
           six: {
             ref: 'six',
             icon: '6.png',
             value: '',
-            bgcolor: this.columnColor,
             name: ''
           }
         },
@@ -256,14 +245,12 @@ export default {
             ref: 'moins',
             name: '',
             value: '',
-            bgcolor: this.columnColor,
             icon: 'remove_circle'
           },
           plus: {
             ref: 'plus',
             name: '',
             value: '',
-            bgcolor: this.columnColor,
             icon: 'add_circle'
           }
         },
@@ -277,8 +264,7 @@ export default {
               dice4: '4.png',
               dice5: '5.png'
             },
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           grandeSuite: {
             ref: 'grandeSuite',
@@ -289,46 +275,39 @@ export default {
               dice5: '5.png',
               dice6: '6.png'
             },
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           }
         },
         bas: {
           brelan: {
             ref: 'brelan',
             name: 'Brelan +20',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           full: {
             ref: 'full',
             name: 'Full +30',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           carre: {
             ref: 'carre',
             name: 'Carré +40',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           yams: {
             ref: 'yams',
             name: 'Yams +50',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           bonusYams: {
             ref: 'bonusYams',
             name: 'Bonus Yams - 50 pts',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           },
           yamsSec: {
             ref: 'yamsSec',
             name: 'Yams sec - 100pts',
-            value: '',
-            bgcolor: this.columnColor
+            value: ''
           }
         }
       }
@@ -411,7 +390,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.input-block {
+  padding-right: 5px;
+}
+.subheader {
+  padding-left: 5px;
+}
 .content {
   margin: 0;
 }
