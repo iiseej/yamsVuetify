@@ -33,7 +33,7 @@
               </v-layout>
             </v-container>
             <v-container class="haut">
-              <v-layout  class="height-4vh" :style="{'background-color': score.totalHaut.bgcolor}">
+              <v-layout  class="height-4vh" :style="{'background-color': bgcolor}">
                 <v-flex class="grand-total-div"xs12>
                   <v-subheader class="grand-total-text title">{{ score.totalHaut.value }}</v-subheader>
                 </v-flex>
@@ -61,7 +61,7 @@
               </v-layout>
             </v-container>
             <v-container class="haut">
-              <v-layout  class="height-4vh" :style="{'background-color': score.totalDiff.bgcolor}">
+              <v-layout  class="height-4vh" :style="{'background-color': bgcolor}">
                 <v-flex class="grand-total-div" xs12>
                   <v-subheader class="grand-total-text title">{{ score.totalDiff.value }}</v-subheader>
                 </v-flex>
@@ -89,7 +89,7 @@
               </v-layout>
             </v-container>
             <v-container class="haut">
-              <v-layout  class="height-4vh" :style="{'background-color': score.totalSuite.bgcolor}">
+              <v-layout  class="height-4vh" :style="{'background-color': bgcolor}">
                 <v-flex class="grand-total-div"xs12>
                   <v-subheader class="grand-total-text title">{{ score.totalSuite.value }}</v-subheader>
                 </v-flex>
@@ -117,7 +117,7 @@
               </v-layout>
             </v-container>
             <v-container class="haut">
-              <v-layout  class="height-4vh" :style="{'background-color': score.totalBas.bgcolor}">
+              <v-layout  class="height-4vh" :style="{'background-color': bgcolor}">
                 <v-flex class="grand-total-div" xs12>
                   <v-subheader class="grand-total-text title">{{ score.totalBas.value }}</v-subheader>
                 </v-flex>
@@ -170,7 +170,7 @@ export default {
   data: () => ({
     color: 'hsla(0, 0%, 100%, 0)',
     columnColor: 'hsla(0, 0%, 100%, 0)',
-    bgcolor: this.columnColor,
+    bgcolor: 'hsla(39, 87%, 90%, 0.6)',
     score: {
       total: {
         ref: 'total',
@@ -179,27 +179,23 @@ export default {
       totalHaut: {
         ref: 'totalHaut',
         name: 'Total Haut',
-        value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
+        value: 0
       },
       totalDiff: {
         ref: 'totalDiff',
         name: 'Différence + 20',
-        value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
+        value: 0
       },
       totalSuite: {
         ref: 'totalSuite',
         name: 'Total suites',
         dices: '',
-        value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
+        value: 0
       },
       totalBas: {
         ref: 'totalBas',
         name: 'Total bas',
-        value: 0,
-        bgcolor: 'hsla(39, 87%, 90%, 0.6)'
+        value: 0
       },
       tables: {
         haut: {

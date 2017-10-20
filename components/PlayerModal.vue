@@ -70,31 +70,23 @@ export default {
             totalHaut: {
               ref: 'totalHaut',
               name: 'Total Haut',
-              value: 0,
-              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-              textColor: 'black'
+              value: 0
             },
             totalDiff: {
               ref: 'totalDiff',
               name: 'Différence + 20',
-              value: 0,
-              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-              textColor: 'black'
+              value: 0
             },
             totalSuite: {
               ref: 'totalSuite',
               name: 'Total suites',
               dices: '',
-              value: 0,
-              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-              textColor: 'black'
+              value: 0
             },
             totalBas: {
               ref: 'totalBas',
               name: 'Total bas',
-              value: 0,
-              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
-              textColor: 'black'
+              value: 0
             },
             tables: {
               haut: {
@@ -102,43 +94,36 @@ export default {
                   ref: 'ace',
                   icon: '1.png',
                   value: '',
-                  bgcolor: this.columnColor,
-                  textColor: 'black',
                   name: ''
                 },
                 two: {
                   ref: 'two',
                   icon: '2.png',
                   value: '',
-                  bgcolor: this.columnColor,
                   name: ''
                 },
                 three: {
                   ref: 'three',
                   icon: '3.png',
                   value: '',
-                  bgcolor: this.columnColor,
                   name: ''
                 },
                 four: {
                   ref: 'four',
                   icon: '4.png',
                   value: '',
-                  bgcolor: this.columnColor,
                   name: ''
                 },
                 five: {
                   ref: 'five',
                   icon: '5.png',
                   value: '',
-                  bgcolor: this.columnColor,
                   name: ''
                 },
                 six: {
                   ref: 'six',
                   icon: '6.png',
                   value: '',
-                  bgcolor: this.columnColor,
                   name: ''
                 }
               },
@@ -147,14 +132,12 @@ export default {
                   ref: 'moins',
                   name: '',
                   value: '',
-                  bgcolor: this.columnColor,
                   icon: 'remove_circle'
                 },
                 plus: {
                   ref: 'plus',
                   name: '',
                   value: '',
-                  bgcolor: this.columnColor,
                   icon: 'add_circle'
                 }
               },
@@ -168,8 +151,7 @@ export default {
                     dice4: '4.png',
                     dice5: '5.png'
                   },
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 grandeSuite: {
                   ref: 'grandeSuite',
@@ -180,51 +162,45 @@ export default {
                     dice5: '5.png',
                     dice6: '6.png'
                   },
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 }
               },
               bas: {
                 brelan: {
                   ref: 'brelan',
                   name: 'Brelan +20',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 full: {
                   ref: 'full',
                   name: 'Full +30',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 carre: {
                   ref: 'carre',
                   name: 'Carré +40',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 yams: {
                   ref: 'yams',
                   name: 'Yams +50',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 bonusYams: {
                   ref: 'bonusYams',
                   name: 'Bonus Yams - 50 pts',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 },
                 yamsSec: {
                   ref: 'yamsSec',
                   name: 'Yams sec - 100pts',
-                  value: '',
-                  bgcolor: this.columnColor
+                  value: ''
                 }
               }
             }
           }
         }
+
       )
     },
     removePlayer (idx) {
