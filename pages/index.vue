@@ -2,7 +2,7 @@
   <v-layout row justify-center align-center>
     <game-menu @newGame="openPlayerModal" @exit="closeMenu" @loadLostGame="retrievePlayers" @nextGame="resetScore" :drawer="drawer"></game-menu>
     <player-modal @closeModal="close"  :dialog="dialog" @cancel="cancelAddPlayer"></player-modal>
-    <player :playersPlaying="playersPlaying" v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded" :nextGameLoaded="nextGameLoaded"></player>
+    <player @savePlayer="saveGame" v-for="(player, index) in players" :index="index" :gameLoaded="gameLoaded" :nextGameLoaded="nextGameLoaded"></player>
 
     <v-btn @click.stop="drawer = !drawer" v-if="newGame" dark color="info">Menu</v-btn>
 
@@ -50,6 +50,10 @@
     }),
     methods: {
       ...mapActions(['reset', 'addPlayer']),
+      saveGame (score, name) {
+        localStorage.removeItem(name)
+        localStorage.setItem(name, JSON.stringify({name: name, score}))
+      },
       close () {
         this.dialog = false
         this.newGame = true

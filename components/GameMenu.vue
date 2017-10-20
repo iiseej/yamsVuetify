@@ -50,7 +50,6 @@ export default {
     items: [
       { title: 'Nouvelle partie', icon: 'dashboard', function: 'newGame' },
       { title: 'Charger partie en cours', icon: 'dashboard', function: 'loadLostGame' },
-      { title: 'Partie suivante', icon: 'question_answer', function: 'nextGame' },
       { title: 'Statistiques', icon: 'question_answer', function: 'stats' },
       { title: 'Quitter', icon: 'question_answer', function: 'exit' }
     ]

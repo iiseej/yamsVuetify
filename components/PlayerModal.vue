@@ -63,69 +63,165 @@ export default {
         {
           name: '',
           score: {
-            ace: {
-              ref: 'ace',
-              value: ''
+            total: {
+              ref: 'total',
+              value: 0
             },
-            two: {
-              ref: 'two',
-              value: ''
+            totalHaut: {
+              ref: 'totalHaut',
+              name: 'Total Haut',
+              value: 0,
+              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+              textColor: 'black'
             },
-            three: {
-              ref: 'three',
-              value: ''
+            totalDiff: {
+              ref: 'totalDiff',
+              name: 'Différence + 20',
+              value: 0,
+              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+              textColor: 'black'
             },
-            four: {
-              ref: 'four',
-              value: ''
+            totalSuite: {
+              ref: 'totalSuite',
+              name: 'Total suites',
+              dices: '',
+              value: 0,
+              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+              textColor: 'black'
             },
-            five: {
-              ref: 'five',
-              value: ''
+            totalBas: {
+              ref: 'totalBas',
+              name: 'Total bas',
+              value: 0,
+              bgcolor: 'hsla(39, 87%, 90%, 0.6)',
+              textColor: 'black'
             },
-            six: {
-              ref: 'six',
-              value: ''
-            },
-            moins: {
-              ref: 'moins',
-              value: ''
-            },
-            plus: {
-              ref: 'plus',
-              value: ''
-            },
-            petiteSuite: {
-              ref: 'petiteSuite',
-              value: ''
-            },
-            grandeSuite: {
-              ref: 'grandeSuite',
-              value: ''
-            },
-            brelan: {
-              ref: 'brelan',
-              value: ''
-            },
-            full: {
-              ref: 'full',
-              value: ''
-            },
-            carre: {
-              ref: 'carre',
-              value: ''
-            },
-            yams: {
-              ref: 'yams',
-              value: ''
-            },
-            bonusYams: {
-              ref: 'bonusYams',
-              value: ''
-            },
-            yamsSec: {
-              ref: 'yamsSec',
-              value: ''
+            tables: {
+              haut: {
+                ace: {
+                  ref: 'ace',
+                  icon: '1.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  textColor: 'black',
+                  name: ''
+                },
+                two: {
+                  ref: 'two',
+                  icon: '2.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  name: ''
+                },
+                three: {
+                  ref: 'three',
+                  icon: '3.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  name: ''
+                },
+                four: {
+                  ref: 'four',
+                  icon: '4.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  name: ''
+                },
+                five: {
+                  ref: 'five',
+                  icon: '5.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  name: ''
+                },
+                six: {
+                  ref: 'six',
+                  icon: '6.png',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  name: ''
+                }
+              },
+              difference: {
+                moins: {
+                  ref: 'moins',
+                  name: '',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  icon: 'remove_circle'
+                },
+                plus: {
+                  ref: 'plus',
+                  name: '',
+                  value: '',
+                  bgcolor: this.columnColor,
+                  icon: 'add_circle'
+                }
+              },
+              suites: {
+                petiteSuite: {
+                  ref: 'petiteSuite',
+                  dices: {
+                    dice1: '1.png',
+                    dice2: '2.png',
+                    dice3: '3.png',
+                    dice4: '4.png',
+                    dice5: '5.png'
+                  },
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                grandeSuite: {
+                  ref: 'grandeSuite',
+                  dices: {
+                    dice2: '2.png',
+                    dice3: '3.png',
+                    dice4: '4.png',
+                    dice5: '5.png',
+                    dice6: '6.png'
+                  },
+                  value: '',
+                  bgcolor: this.columnColor
+                }
+              },
+              bas: {
+                brelan: {
+                  ref: 'brelan',
+                  name: 'Brelan +20',
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                full: {
+                  ref: 'full',
+                  name: 'Full +30',
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                carre: {
+                  ref: 'carre',
+                  name: 'Carré +40',
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                yams: {
+                  ref: 'yams',
+                  name: 'Yams +50',
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                bonusYams: {
+                  ref: 'bonusYams',
+                  name: 'Bonus Yams - 50 pts',
+                  value: '',
+                  bgcolor: this.columnColor
+                },
+                yamsSec: {
+                  ref: 'yamsSec',
+                  name: 'Yams sec - 100pts',
+                  value: '',
+                  bgcolor: this.columnColor
+                }
+              }
             }
           }
         }

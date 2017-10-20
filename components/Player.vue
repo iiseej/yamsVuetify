@@ -20,10 +20,10 @@
           </v-flex>
           <v-flex xs3>
             <v-text-field
-            @change.native="saveGame"
+            @change.native="savePlayer"
             class="input-score"
              solo
-              @keyup.native="totalHaut(), grandTotal(), setColor(), setScore()"
+              @keyup.native="totalHaut(), grandTotal(), setColor()"
               name="input-1-3"
               v-model="category.value"
               label=""
@@ -391,37 +391,20 @@ export default {
     //     alert('partie finie')
     //   }
     // }
-    saveGame () {
-      localStorage.clear()
-      _.forEach(this.score.tables, (sc) => {
-        _.forEach(sc, (cat) => {
-          console.log(cat.value)
-          this.players[this.index].score[cat.ref].value = cat.value
-        })
-      })
-      _.forEach(this.players, (player) => {
-        localStorage.setItem(player.name, JSON.stringify(player))
-      })
+    savePlayer () {
+      this.$emit('savePlayer', this.score, this.players[this.index].name)
+      // _.forEach(this.score, (sc) => {
+      //   _.forEach(sc, (cat) => {
+      this.players[this.index].score = this.score
+      // })
     },
     setScore () {
-      if (this.gameLoaded === true || this.nextGameLoaded === true) {
-        _.forEach(this.score.tables, (sc) => {
-          _.forEach(sc, (cat) => {
-            cat.value = this.players[this.index].score[cat.ref].value
-          })
-        })
-      }
+      this.score = this.players[this.index].score
     }
   },
   created () {
     if (this.gameLoaded === true) {
       this.setScore()
-    } else {
-      _.forEach(this.score.tables, (sc) => {
-        _.forEach(sc, (cat) => {
-          cat.value = ''
-        })
-      })
     }
   }
 }
