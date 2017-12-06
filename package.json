@@ -11,7 +11,13 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^2.1.1",
+    "apollo-client": "^1.9.3",
+    "firebase": "^4.6.0",
+    "mongodb-stitch": "^1.1.8",
     "nuxt": "^1.0.0-rc11",
+    "vue-apollo": "^2.1.0-rc.8",
+    "vuefire": "^1.4.4",
     "vuetify": "^0.16.1"
   },
   "devDependencies": {

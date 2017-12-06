@@ -15,7 +15,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
-  plugins: ['~/plugins/vuetify.js'],
+  plugins: ['~/plugins/vuetify.js', '~/plugins/vuefire.js'],
   css: [
     '~/assets/style/app.styl',
     '~/assets/style/style.css'
@@ -24,6 +24,32 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
+  /*
+  ** Modules
+  */
+  modules: ['@nuxtjs/apollo', '@nuxtjs/axios', {
+      src: '@rafamaciel/firebase',
+      options: {
+        apiKey: "AIzaSyC1A-pqyvCExapQ-aU0h-T03SGsQUQjjlM",
+        authDomain: "yams-ca6b4.firebaseapp.com",
+        databaseURL: "https://yams-ca6b4.firebaseio.com",
+        projectId: "yams-ca6b4",
+        storageBucket: "yams-ca6b4.appspot.com",
+        messagingSenderId: "1003950231287"
+      }
+    }],
+
+  axios: {
+    // proxyHeaders: false
+    baseURL: 'https://yams-ca6b4.firebaseio.com/'
+  },
+
+  // Give apollo module options
+  apollo: {
+    networkInterfaces: {
+      default: '~/apollo/network-interfaces/default.js'
+    },
+  },
   /*
   ** Build configuration
   */

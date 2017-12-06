@@ -1,15 +1,20 @@
 <template>
-  <v-layout wrap v-if="drawer">
-    <v-container>
+  <v-layout wrap>
+    <!-- <v-container>
       <v-layout justify-center>
-        <!-- <v-btn @click.stop="drawer = !drawer" dark color="info">Menu</v-btn> -->
+        <v-btn @click.stop="drawer = !drawer" dark color="info">Menu</v-btn>
       </v-layout>
-    </v-container>
+    </v-container> -->
+    <v-avatar class="dice-menu" @click.stop="drawer = !drawer" v-if="menu">
+        <img src="dice.png" />
+    </v-avatar>
+
     <v-navigation-drawer
-      persistent
-      v-model="menu"
-      light
-      absolute
+      v-model="drawer"
+      dark
+      temporary
+      enable-resize-watcher
+      app
     >
       <v-list class="pa-1">
         <v-list-tile avatar>
@@ -19,6 +24,10 @@
           <v-list-tile-content>
             <v-list-tile-title>Yams</v-list-tile-title>
           </v-list-tile-content>
+          <v-list-tile-action>
+            <v-btn icon @click.native.stop="mini = !mini">
+              <v-icon>chevron_left</v-icon>
+            </v-btn>
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
@@ -32,6 +41,23 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
+          <v-list-tile to="/stats">
+            <v-list-tile-action>
+              <v-icon>trending_up</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Statistiques</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        <v-list-tile @click="exit">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Quitter</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
   </v-layout>
@@ -41,17 +67,17 @@
 export default {
   name: 'GameMenu',
   props: {
-    drawer: {
+    menu: {
       type: Boolean,
       default: false
     }
   },
   data: () => ({
+    drawer: false,
     items: [
-      { title: 'Nouvelle partie', icon: 'dashboard', function: 'newGame' },
-      { title: 'Charger partie en cours', icon: 'dashboard', function: 'loadLostGame' },
-      { title: 'Statistiques', icon: 'question_answer', function: 'stats' },
-      { title: 'Quitter', icon: 'question_answer', function: 'exit' }
+      { title: 'Nouvelle partie', icon: 'play_circle_filled', function: 'newGame' },
+      { title: 'Partie suivante', icon: 'skip_next', function: 'nextGame' },
+      { title: 'Charger partie en cours', icon: 'save', function: 'loadLostGame' }
     ]
   }),
   methods: {
@@ -61,9 +87,9 @@ export default {
     nextGame () {
       this.$emit('nextGame')
     },
-    stats () {
-
-    },
+    // stats () {
+    //   router.go('/stats')
+    // },
     exit () {
       this.$emit('exit')
     },
@@ -72,12 +98,27 @@ export default {
     }
   },
   computed: {
-    menu () {
-      return this.drawer
-    }
+  },
+  watch: {
+    // menuDrawer: {
+    //   handler () {
+    //     if (this.menuDrawer === false) {
+    //       this.$emit('closeMenu')
+    //     }
+    //   }
+    // }
   }
 }
 </script>
 
 <style>
+.dice-menu {
+  position: absolute;
+  top: 50vh;
+  left: 0px;
+  margin-left: 20px;
+}
+a {
+  text-decoration: none;
+}
 </style>

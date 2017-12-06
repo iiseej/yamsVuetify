@@ -1,0 +1,26 @@
+{
+  Game(id: "cj95k7o0x24nf01046nxbh1s1") {
+    id
+    ace
+    two
+    three
+    four
+    five
+    six
+    totalHaut
+    moins
+    plus
+    totalDiff
+    petiteSuite
+    grandeSuite
+    totalSuites
+    brelan
+    full
+    carre
+    yams
+    bonusYams
+    yamsSec
+    totalBas
+    totalGame
+	}
+}

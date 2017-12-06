@@ -3,76 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      players: [],
-      playerModel: {
-        name: '',
-        score: {
-          ace: {
-            ref: 'ace',
-            value: ''
-          },
-          two: {
-            ref: 'two',
-            value: ''
-          },
-          three: {
-            ref: 'three',
-            value: ''
-          },
-          four: {
-            ref: 'four',
-            value: ''
-          },
-          five: {
-            ref: 'five',
-            value: ''
-          },
-          six: {
-            ref: 'six',
-            value: ''
-          },
-          moins: {
-            ref: 'moins',
-            value: ''
-          },
-          plus: {
-            ref: 'plus',
-            value: ''
-          },
-          petiteSuite: {
-            ref: 'petiteSuite',
-            value: ''
-          },
-          grandeSuite: {
-            ref: 'grandeSuite',
-            value: ''
-          },
-          brelan: {
-            ref: 'brelan',
-            value: ''
-          },
-          full: {
-            ref: 'full',
-            value: ''
-          },
-          carre: {
-            ref: 'carre',
-            value: ''
-          },
-          yams: {
-            ref: 'yams',
-            value: ''
-          },
-          bonusYams: {
-            ref: 'bonusYams',
-            value: ''
-          },
-          yamsSec: {
-            ref: 'yamsSec',
-            value: ''
-          }
-        }
-      }
+      players: []
     },
     mutations: {
       ADD_PLAYER: (state, player) => {
@@ -83,6 +14,45 @@ const createStore = () => {
       },
       RESET: (state) => {
         state.players = []
+      },
+      SET_PLAYERS: (state) => {
+        let newGame = []
+        for (let i = 0; i < state.players.length; i += 1) {
+          newGame.push(
+            {
+              name: state.players[i].name,
+              id: state.players[i].id,
+              score: {
+                top: {
+                  one: null,
+                  two: null,
+                  three: null,
+                  four: null,
+                  five: null,
+                  six: null
+                },
+                diff: {
+                  lowest: null,
+                  highest: null
+                },
+                straights: {
+                  small: null,
+                  high: null
+                },
+                bottom: {
+                  threeOfAKind: null,
+                  fullHouse: null,
+                  fourOfAKind: null,
+                  yams: null,
+                  bonusYams: null,
+                  yamsSec: null
+                },
+                total: null
+              }
+            }
+          )
+        }
+        state.players = newGame
       }
     },
     getters: {
@@ -98,6 +68,9 @@ const createStore = () => {
       },
       reset ({ commit }) {
         commit('RESET')
+      },
+      setPlayers ({ commit }) {
+        commit('SET_PLAYERS')
       }
     }
   })

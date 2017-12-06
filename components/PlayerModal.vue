@@ -1,35 +1,39 @@
 <template>
     <v-dialog v-model="playerDialog" persistent max-width="500px">
       <!-- <v-btn color="primary" dark slot="activator">Open Dialog</v-btn> -->
-      <v-card>
+      <v-card dark>
         <v-card-title>
-          <span class="headline">Ajouter des joueurs <v-btn fab dark color="black" small @click="addPlayer">
-      <v-icon dark>add</v-icon>
-    </v-btn></span>
+          <span class="headline">Ajouter des joueurs
+            <!-- <v-btn fab dark color="black" small @click="addPlayer"> -->
+      <!-- <v-icon dark>add</v-icon> -->
+            <!-- </v-btn> -->
+          </span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex class="select-player" xs12 sm12 v-for="(player, index) in players">
+              <v-flex class="select-player" xs12 sm12>
                 <v-select
+                  @change="savePlayer"
                   clearable
-                  v-model="player.name"
-                  label="Joueur"
+                  v-model="playersSelected"
+                  label="Joueurs"
                   autocomplete
                   single-line
                   bottom
-                  :items="['Fab', 'Soso', 'François', 'Alex', 'Clem', 'Judus', 'Jess']"
+                  tags
+                  :items="existingPlayers"
                 ></v-select>
-                <v-btn color="red" dark @click.native="removePlayer(index)">
-                  <v-icon light center>delete</v-icon>
-                </v-btn>
+                <!-- <v-btn color="red" dark @click.native="removePlayer(index)"> -->
+                  <!-- <v-icon light center>delete</v-icon> -->
+                <!-- </v-btn> -->
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="closeModal">Start</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="savePlayer(), startGame()">Start</v-btn>
           <v-btn color="blue darken-1" flat @click.native="cancel">Cancel</v-btn>
         </v-card-actions>
       </v-card>
@@ -38,6 +42,8 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+// import axios from 'axios'
+import _ from 'lodash'
 
 export default {
   name: 'playerModal',
@@ -48,6 +54,9 @@ export default {
     }
   },
   data: () => ({
+    playersSelected: [],
+    existingPlayers: [],
+    playersPlaying: []
   }),
   methods: {
     ...mapActions(['addPlayer', 'removePlayer', 'reset']),
@@ -58,153 +67,77 @@ export default {
       this.reset()
       this.$emit('cancel')
     },
-    addPlayer () {
-      this.players.push(
-        {
-          name: '',
-          score: {
-            total: {
-              ref: 'total',
-              value: 0
-            },
-            totalHaut: {
-              ref: 'totalHaut',
-              name: 'Total Haut',
-              value: 0
-            },
-            totalDiff: {
-              ref: 'totalDiff',
-              name: 'Différence + 20',
-              value: 0
-            },
-            totalSuite: {
-              ref: 'totalSuite',
-              name: 'Total suites',
-              dices: '',
-              value: 0
-            },
-            totalBas: {
-              ref: 'totalBas',
-              name: 'Total bas',
-              value: 0
-            },
-            tables: {
-              haut: {
-                ace: {
-                  ref: 'ace',
-                  icon: '1.png',
-                  value: '',
-                  name: ''
+    savePlayer () {
+      const playersFirebase = this.$firebase.database().ref('players')
+      _.forEach(this.playersSelected, (name) => {
+        if (this.existingPlayers.indexOf(name) === -1) {
+          playersFirebase.push(
+            {
+              name: name,
+              wins: 0,
+              lost: 0,
+              yamsDone: 0,
+              yamsSecDone: 0
+            }
+          )
+        }
+      })
+      this.getPlayers()
+    },
+    startGame () {
+      const playersFirebase = this.$firebase.database().ref('players')
+      _.forEach(this.playersSelected, (player) => {
+        playersFirebase.orderByChild('name').equalTo(player).on('child_added', (data) => {
+          // this.playersPlaying.push({name: player, id: data.key})
+          this.players.push(
+            {
+              name: player,
+              id: data.key,
+              win: false,
+              score: {
+                top: {
+                  one: null,
+                  two: null,
+                  three: null,
+                  four: null,
+                  five: null,
+                  six: null
                 },
-                two: {
-                  ref: 'two',
-                  icon: '2.png',
-                  value: '',
-                  name: ''
+                diff: {
+                  lowest: null,
+                  highest: null
                 },
-                three: {
-                  ref: 'three',
-                  icon: '3.png',
-                  value: '',
-                  name: ''
+                straights: {
+                  small: null,
+                  high: null
                 },
-                four: {
-                  ref: 'four',
-                  icon: '4.png',
-                  value: '',
-                  name: ''
+                bottom: {
+                  threeOfAKind: null,
+                  fullHouse: null,
+                  fourOfAKind: null,
+                  yams: null,
+                  bonusYams: null,
+                  yamsSec: null
                 },
-                five: {
-                  ref: 'five',
-                  icon: '5.png',
-                  value: '',
-                  name: ''
-                },
-                six: {
-                  ref: 'six',
-                  icon: '6.png',
-                  value: '',
-                  name: ''
-                }
-              },
-              difference: {
-                moins: {
-                  ref: 'moins',
-                  name: '',
-                  value: '',
-                  icon: 'remove_circle'
-                },
-                plus: {
-                  ref: 'plus',
-                  name: '',
-                  value: '',
-                  icon: 'add_circle'
-                }
-              },
-              suites: {
-                petiteSuite: {
-                  ref: 'petiteSuite',
-                  dices: {
-                    dice1: '1.png',
-                    dice2: '2.png',
-                    dice3: '3.png',
-                    dice4: '4.png',
-                    dice5: '5.png'
-                  },
-                  value: ''
-                },
-                grandeSuite: {
-                  ref: 'grandeSuite',
-                  dices: {
-                    dice2: '2.png',
-                    dice3: '3.png',
-                    dice4: '4.png',
-                    dice5: '5.png',
-                    dice6: '6.png'
-                  },
-                  value: ''
-                }
-              },
-              bas: {
-                brelan: {
-                  ref: 'brelan',
-                  name: 'Brelan +20',
-                  value: ''
-                },
-                full: {
-                  ref: 'full',
-                  name: 'Full +30',
-                  value: ''
-                },
-                carre: {
-                  ref: 'carre',
-                  name: 'Carré +40',
-                  value: ''
-                },
-                yams: {
-                  ref: 'yams',
-                  name: 'Yams +50',
-                  value: ''
-                },
-                bonusYams: {
-                  ref: 'bonusYams',
-                  name: 'Bonus Yams - 50 pts',
-                  value: ''
-                },
-                yamsSec: {
-                  ref: 'yamsSec',
-                  name: 'Yams sec - 100pts',
-                  value: ''
-                }
+                total: null
               }
             }
-          }
-        }
-
-      )
+          )
+        })
+      })
+      this.closeModal()
     },
     removePlayer (idx) {
       this.players.splice(idx, 1)
+    },
+    getPlayers () {
+      this.existingPlayers = []
+      const playersFirebase = this.$firebase.database().ref('players')
+      playersFirebase.once('value').then((snapshot) => {
+        _.forEach(snapshot.val(), (player) => {
+          this.existingPlayers.push(player.name)
+        })
+      })
     }
   },
   computed: {
@@ -212,6 +145,9 @@ export default {
       return this.dialog
     },
     ...mapGetters(['players'])
+  },
+  created () {
+    this.getPlayers()
   }
 }
 </script>

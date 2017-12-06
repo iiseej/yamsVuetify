@@ -1,0 +1,30 @@
+query Player($id: ID!) {
+  Player(id: $id) {
+    id
+    name
+    games {
+      id
+      ace
+      two
+      three
+      four
+      five
+      six
+      totalHaut
+      moins
+      plus
+      totalDiff
+      petiteSuite
+      grandeSuite
+      totalSuites
+      brelan
+      full
+      carre
+      yams
+      bonusYams
+      yamsSec
+      totalBas
+      totalGame
+    }
+  }
+}

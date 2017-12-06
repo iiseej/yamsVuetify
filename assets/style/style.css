@@ -15,4 +15,6 @@
 .application--light .input-group input {
   text-align: center;
   padding-bottom: 3px;
+  font-size: x-large;
+  font-weight: 700;
 }
